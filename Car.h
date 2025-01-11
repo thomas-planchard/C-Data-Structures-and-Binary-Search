@@ -99,8 +99,8 @@ string Car::getColor()
 
 void Car::display()
 {
-    cout << "Make: " << make << endl;
-    cout << "Model: " << model << endl;
-    cout << "Year: " << year << endl;
-    cout << "Color: " << color << endl;
+    cout << "Make: " << make ;
+    cout << ", Model: " << model;
+    cout << ", Year: " << year;
+    cout << ", Color: " << color << endl;
 }

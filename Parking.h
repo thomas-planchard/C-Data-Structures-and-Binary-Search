@@ -22,7 +22,7 @@ class Parking : public Car
 
 Parking::Parking()
 {
-    cars = {};
+    cout << "The parking lot is now open." << endl;
 }
 
 Parking::~Parking()
