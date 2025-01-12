@@ -1,5 +1,7 @@
-#include "Car.h"
+// This file contains the declaration of the Parking class and its member functions.
+// The Parking class manages a collection of cars and provides methods to park, remove, search, display, and sort cars.
 
+#include "Car.h"
 
 class Parking : public Car
 {
@@ -10,12 +12,13 @@ class Parking : public Car
         ~Parking();
         void parkCar(Car* car);
         void removeCar(Car* car);
+        vector<Car*> getCars();
         void displayCars();
-        void sortCars(vector<Car>* car, int start, int end);
+        void sortCars(vector<Car*>* car, int start, int end);
         void searchCar(string make, string model, int year, string color);
 
     private:
-        void merge(vector <Car>* car, int start, int mid, int end);
+        void merge(vector <Car*>* car, int start, int mid, int end);
 
 };
 
@@ -47,6 +50,12 @@ void Parking::removeCar(Car* car)
     }
 }
 
+vector<Car*> Parking::getCars()
+{
+    return cars;
+
+}
+
 
 void Parking::displayCars()
 {
@@ -57,7 +66,7 @@ void Parking::displayCars()
 }
 
 
-void Parking::sortCars(vector<Car>* cars, int start, int end)
+void Parking::sortCars(vector<Car*>* cars, int start, int end)
 {
     if(start < end)
     {
@@ -69,12 +78,12 @@ void Parking::sortCars(vector<Car>* cars, int start, int end)
     else return;
 }
 
-void Parking::merge(vector<Car>* cars, int start, int mid, int end)
+void Parking::merge(vector<Car*>* cars, int start, int mid, int end)
 {
     int sizeLeft = mid - start + 1;
     int sizeRight = end - mid;
-    vector<Car> left(sizeLeft);
-    vector<Car> right(sizeRight);
+    vector<Car*> left(sizeLeft);
+    vector<Car*> right(sizeRight);
     for (int i = 0; i < sizeLeft; i++)
     { 
         left[i] = (*cars)[start + i];
@@ -88,7 +97,7 @@ void Parking::merge(vector<Car>* cars, int start, int mid, int end)
     int k = start;
     while (i < sizeLeft && j < sizeRight)
     {
-        if (left[i].getYear() <= right[j].getYear())
+        if (left[i]->getYear() <= right[j]->getYear())
         {
             (*cars)[k] = left[i];
             i++;

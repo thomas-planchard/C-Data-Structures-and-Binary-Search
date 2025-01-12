@@ -1,10 +1,13 @@
-#include "Parking.h"
+// This file contains the main function
+// It initializes the parking lot, adds some cars, and provides a menu for user interaction.
 
+#include "Parking.h"
 
 int main()
 {
-
     cout << "Welcome to the parking lot!" << endl;
+
+    // Initialize parking lot and add some cars
     Parking parking;
     Car* car1 = new Car("Toyota", "Camry", 2015, "Black");
     Car* car2 = new Car("Honda", "Civic", 2010, "White");
@@ -17,10 +20,11 @@ int main()
     parking.parkCar(car4);
     parking.parkCar(car5);
 
+    // Display cars in the parking lot
     cout << "Cars in the parking lot:" << endl;
     parking.displayCars();
 
-
+    // Menu for user interaction
     int choice;
     while (true)
     {
@@ -29,10 +33,13 @@ int main()
         cout << "2. Remove a car" << endl;
         cout << "3. Search for a car" << endl;
         cout << "4. Display cars" << endl;
-        cout << "5. Exit" << endl;
+        cout << "5. Sort cars" << endl;
+        cout << "6. Exit" << endl;
         cin >> choice;
+
         if (choice == 1)
         {
+            // Park a new car
             string make;
             string model;
             int year;
@@ -51,6 +58,7 @@ int main()
         }
         else if (choice == 2)
         {
+            // Remove a car
             string make;
             string model;
             int year;
@@ -69,6 +77,7 @@ int main()
         }
         else if (choice == 3)
         {
+            // Search for a car
             string make;
             string model;
             int year;
@@ -85,19 +94,26 @@ int main()
         }
         else if (choice == 4)
         {
+            // Display all cars
             parking.displayCars();
         }
         else if (choice == 5)
         {
+            // Sort cars
+            parking.sortCars(&parking.cars, 0, parking.getCars().size() - 1);
+            cout << "Cars sorted successfully." << endl;
+        }
+        else if (choice == 6)
+        {
+            // Exit the program
             break;
         }
         else
         {
-            cout << "Invalid choice."
-                    << endl;
+            // Invalid choice
+            cout << "Invalid choice." << endl;
         }
     }
-    
-    return 0;
 
+    return 0;
 }
