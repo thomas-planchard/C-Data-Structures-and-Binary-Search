@@ -2,9 +2,12 @@
 // It initializes the parking lot, adds some cars, and provides a menu for user interaction.
 
 #include "Parking.h"
+#include "test_Car.h"
 
 int main()
 {
+    // Run tests for the Car class
+    testCar();
     cout << "Welcome to the parking lot!" << endl;
 
     // Initialize parking lot and add some cars
@@ -59,21 +62,18 @@ int main()
         else if (choice == 2)
         {
             // Remove a car
-            string make;
-            string model;
-            int year;
-            string color;
-            cout << "Enter the make of the car: ";
-            cin >> make;
-            cout << "Enter the model of the car: ";
-            cin >> model;
-            cout << "Enter the year of the car: ";
-            cin >> year;
-            cout << "Enter the color of the car: ";
-            cin >> color;
-            Car* car = new Car(make, model, year, color);
-            parking.removeCar(car);
-            cout << "Car removed successfully." << endl;
+            int index;
+            cout << "Enter the index of the car: ";
+            cin >> index;
+            if (index >= 0 && index < parking.getCars().size())
+            {
+                parking.removeCar(parking.getCars()[index]);
+                cout << "Car removed successfully." << endl;
+            }
+            else
+            {
+                cout << "Invalid index." << endl;
+            }
         }
         else if (choice == 3)
         {
@@ -92,22 +92,26 @@ int main()
             cin >> color;
             parking.searchCar(make, model, year, color);
         }
+
         else if (choice == 4)
         {
             // Display all cars
             parking.displayCars();
         }
+
         else if (choice == 5)
         {
             // Sort cars
-            parking.sortCars(&parking.cars, 0, parking.getCars().size() - 1);
+            parking.sortCarsByYear();
             cout << "Cars sorted successfully." << endl;
         }
+
         else if (choice == 6)
         {
             // Exit the program
             break;
         }
+
         else
         {
             // Invalid choice

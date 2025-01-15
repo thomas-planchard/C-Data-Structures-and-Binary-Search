@@ -1,9 +1,7 @@
 // This file contains the declaration of the Car class and its member functions.
 // The Car class represents a car with attributes such as make, model, year, and color.
 
-#include <iostream>
 #include <string>
-#include <vector>
 
 using namespace std;
 

@@ -1,6 +1,6 @@
 // This file contains the declaration of the Parking class and its member functions.
 // The Parking class manages a collection of cars and provides methods to park, remove, search, display, and sort cars.
-
+#include "BST.hpp"
 #include "Car.h"
 
 class Parking : public Car
@@ -14,12 +14,8 @@ class Parking : public Car
         void removeCar(Car* car);
         vector<Car*> getCars();
         void displayCars();
-        void sortCars(vector<Car*>* car, int start, int end);
         void searchCar(string make, string model, int year, string color);
-
-    private:
-        void merge(vector <Car*>* car, int start, int mid, int end);
-
+        void sortCarsByYear();
 };
 
 
@@ -66,62 +62,39 @@ void Parking::displayCars()
 }
 
 
-void Parking::sortCars(vector<Car*>* cars, int start, int end)
+void Parking::sortCarsByYear()
 {
-    if(start < end)
+    cout << "Sorting cars by year using BinaryTree..." << endl;
+
+    BinaryTree tree;
+    Node* root = NULL;
+
+    // Insert car years into the BST
+    for (Car* car : cars)
     {
-        int mid = start + (end - start) / 2;
-        sortCars(cars, start, mid);
-        sortCars(cars, mid + 1, end);
-        merge(cars, start, mid, end);
+        root = tree.insertNode(root, car->year);
     }
-    else return;
+
+    vector<int> sortedYears;
+    tree.inOrderStorage(root, sortedYears);
+
+    vector<Car*> sortedCars;
+    for (int year : sortedYears)
+    {
+        for (Car* car : cars)
+        {
+            if (car->year == year)
+            {
+                sortedCars.push_back(car);
+                break;
+            }
+        }
+    }
+
+    cars = sortedCars;
+    displayCars();
 }
 
-void Parking::merge(vector<Car*>* cars, int start, int mid, int end)
-{
-    int sizeLeft = mid - start + 1;
-    int sizeRight = end - mid;
-    vector<Car*> left(sizeLeft);
-    vector<Car*> right(sizeRight);
-    for (int i = 0; i < sizeLeft; i++)
-    { 
-        left[i] = (*cars)[start + i];
-    }
-    for (int i = 0; i < sizeRight; i++)
-    {
-        right[i] = (*cars)[mid + 1 + i];
-    }
-    int i = 0;
-    int j = 0;
-    int k = start;
-    while (i < sizeLeft && j < sizeRight)
-    {
-        if (left[i]->getYear() <= right[j]->getYear())
-        {
-            (*cars)[k] = left[i];
-            i++;
-        }
-        else
-        {
-            (*cars)[k] = right[j];
-            j++;
-        }
-        k++;
-    }
-    while (i < sizeLeft)
-    {
-        (*cars)[k] = left[i];
-        i++;
-        k++;
-    }
-    while (j < sizeRight)
-    {
-        (*cars)[k] = right[j];
-        j++;
-        k++;
-    }
-}
 
 void Parking::searchCar(string make, string model, int year, string color)
 {
